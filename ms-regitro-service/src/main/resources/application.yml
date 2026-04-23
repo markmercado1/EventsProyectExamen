@@ -1,6 +1,6 @@
 spring:
   application:
-    name: ms-participants-service
+    name: ms-registro-server
   profiles:
     active: development
   config:

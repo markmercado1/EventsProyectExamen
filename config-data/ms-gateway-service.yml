@@ -16,6 +16,10 @@ spring:
           uri: lb://ms-participants-service
           predicates:
             - Path=/participants/**
+        - id: ms-registro-server
+          uri: lb://ms-registro-server
+          predicates:
+            - Path=/registros/**
 
 
       globalcors:
