@@ -1,0 +1,108 @@
+<!-- src/app/components/event-form/event-form.component.html -->
+
+<h2 mat-dialog-title>{{ isEditMode ? 'Editar Evento' : 'Crear Nuevo Evento' }}</h2>
+
+<mat-dialog-content>
+  <form [formGroup]="eventForm" class="event-form">
+
+    <!-- Nombre -->
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Nombre del Evento</mat-label>
+      <input matInput formControlName="name" placeholder="Ingrese el nombre del evento" maxlength="150">
+      <mat-hint align="end">{{ f['name'].value?.length || 0 }}/150</mat-hint>
+      <mat-error *ngIf="f['name'].invalid">{{ getErrorMessage('name') }}</mat-error>
+    </mat-form-field>
+
+    <!-- Descripción -->
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Descripción</mat-label>
+      <textarea matInput formControlName="description"
+                placeholder="Ingrese una descripción del evento"
+                rows="4"
+                maxlength="5000"></textarea>
+      <mat-hint align="end">{{ f['description'].value?.length || 0 }}/5000</mat-hint>
+      <mat-error *ngIf="f['description'].invalid">{{ getErrorMessage('description') }}</mat-error>
+    </mat-form-field>
+
+    <!-- Fechas -->
+    <div class="date-row">
+      <mat-form-field appearance="outline" class="half-width">
+        <mat-label>Fecha de Inicio</mat-label>
+        <input matInput [matDatepicker]="startPicker" formControlName="startDate" [min]="minDate">
+        <mat-datepicker-toggle matSuffix [for]="startPicker"></mat-datepicker-toggle>
+        <mat-datepicker #startPicker></mat-datepicker>
+        <mat-error *ngIf="f['startDate'].invalid">{{ getErrorMessage('startDate') }}</mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="half-width">
+        <mat-label>Fecha de Fin</mat-label>
+        <input matInput [matDatepicker]="endPicker" formControlName="endDate" [min]="f['startDate'].value || minDate">
+        <mat-datepicker-toggle matSuffix [for]="endPicker"></mat-datepicker-toggle>
+        <mat-datepicker #endPicker></mat-datepicker>
+        <mat-error *ngIf="f['endDate'].invalid">{{ getErrorMessage('endDate') }}</mat-error>
+      </mat-form-field>
+    </div>
+
+    <!-- Modalidad y Tipo -->
+    <div class="row">
+      <mat-form-field appearance="outline" class="half-width">
+        <mat-label>Modalidad</mat-label>
+        <mat-select formControlName="modality">
+          <mat-option *ngFor="let modality of eventModalities" [value]="modality">
+            {{ modality }}
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="f['modality'].invalid">{{ getErrorMessage('modality') }}</mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="half-width">
+        <mat-label>Tipo de Evento</mat-label>
+        <mat-select formControlName="eventType">
+          <mat-option *ngFor="let type of eventTypes" [value]="type">
+            {{ type }}
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="f['eventType'].invalid">{{ getErrorMessage('eventType') }}</mat-error>
+      </mat-form-field>
+    </div>
+
+    <!-- Capacidad -->
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Capacidad Máxima</mat-label>
+      <input matInput type="number" formControlName="maxCapacity" placeholder="0" min="0">
+      <mat-icon matSuffix>people</mat-icon>
+      <mat-hint>Deje en 0 para capacidad ilimitada</mat-hint>
+      <mat-error *ngIf="f['maxCapacity'].invalid">{{ getErrorMessage('maxCapacity') }}</mat-error>
+    </mat-form-field>
+
+    <!-- Dirección -->
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Dirección</mat-label>
+      <input matInput formControlName="address" placeholder="Ingrese la dirección del evento" maxlength="255">
+      <mat-icon matSuffix>location_on</mat-icon>
+      <mat-hint align="end">{{ f['address'].value?.length || 0 }}/255</mat-hint>
+      <mat-error *ngIf="f['address'].invalid">{{ getErrorMessage('address') }}</mat-error>
+    </mat-form-field>
+
+    <!-- Estado (solo en modo edición) -->
+    <mat-form-field appearance="outline" class="full-width" *ngIf="isEditMode">
+      <mat-label>Estado</mat-label>
+      <mat-select formControlName="status">
+        <mat-option *ngFor="let status of eventStatuses" [value]="status">
+          {{ status }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+  </form>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button (click)="onCancel()" [disabled]="loading">
+    Cancelar
+  </button>
+  <button mat-raised-button color="primary" (click)="onSubmit()" [disabled]="loading || eventForm.invalid">
+    <mat-spinner *ngIf="loading" diameter="20" style="display: inline-block; margin-right: 8px;"></mat-spinner>
+    {{ isEditMode ? 'Actualizar' : 'Crear' }}
+  </button>
+</mat-dialog-actions>

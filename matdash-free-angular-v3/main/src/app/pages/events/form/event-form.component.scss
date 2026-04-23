@@ -1,0 +1,52 @@
+
+.event-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  min-width: 400px;
+  padding-top: 10px;
+
+  .full-width {
+    width: 100%;
+  }
+
+  .date-row,
+  .row {
+    display: flex;
+    gap: 16px;
+
+    .half-width {
+      flex: 1;
+    }
+  }
+}
+
+mat-dialog-content {
+  max-height: 70vh;
+  overflow-y: auto;
+}
+
+mat-dialog-actions {
+  padding: 16px 24px;
+  margin: 0;
+
+  button {
+    margin-left: 8px;
+  }
+}
+
+// Responsive
+@media (max-width: 600px) {
+  .event-form {
+    min-width: auto;
+
+    .date-row,
+    .row {
+      flex-direction: column;
+
+      .half-width {
+        width: 100%;
+      }
+    }
+  }
+}

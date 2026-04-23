@@ -1,0 +1,40 @@
+<mat-card class="p-6 max-w-2xl mx-auto mt-6 shadow-lg rounded-xl">
+  <br>
+  <h2 class="mat-headline-small mb-4">
+    {{ isEdit ? 'Edit Participant' : 'Create Participant' }}
+  </h2>
+  <br>
+  <form [formGroup]="form" (ngSubmit)="save()" class="flex flex-col gap-4">
+
+    <mat-form-field appearance="outline" class="w-100">
+      <mat-label>First Name</mat-label>
+      <input matInput formControlName="firstName">
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="w-100">
+      <mat-label>Last Name</mat-label>
+      <input matInput formControlName="lastName">
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="w-100">
+      <mat-label>Email</mat-label>
+      <input matInput formControlName="email">
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="w-100">
+      <mat-label>Phone</mat-label>
+      <input matInput formControlName="phone">
+    </mat-form-field>
+
+    <div class="flex gap-3 mt-2">
+      <button mat-raised-button color="primary" class="px-6">
+        {{ isEdit ? 'Update' : 'Save' }}
+      </button>
+
+      <button mat-stroked-button color="warn" routerLink="/participants" class="px-6">
+        Cancel
+      </button>
+    </div>
+
+  </form>
+</mat-card>
